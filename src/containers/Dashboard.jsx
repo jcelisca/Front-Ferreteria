@@ -1,6 +1,10 @@
+import logo from '../assets/img/logo.jpg';
+
 const Dashboard = () => {
     return (
-        <h1>Wellcome</h1>
+        <div className="container" alt="Logo ferreteria">
+            <img src={logo}/>
+        </div>
      );
 }
 

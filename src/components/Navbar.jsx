@@ -18,7 +18,7 @@ const Navbar = () => {
     return (
         <nav>
             <h3>
-                <Link to="/">Messenger</Link>
+                <Link to="/">Home</Link>
             </h3>
             <div>
                 {user ? (

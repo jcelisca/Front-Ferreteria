@@ -57,15 +57,14 @@ const Login = () => {
             history("/");
         }catch(err){
             setData({ ...data, loading: false });
-            alert("Usuario o contraseÃ±a incorrecta");
+            alert("Usuario o contraseña incorrecta");
         }
     }
 
     return (
         <section>
         <form className="form-login" onSubmit={handleSubmit} >
-            <h2>Sign In to Chatty</h2>
-            <br/>
+            <h2>Sign In</h2>
             <br/>
             <div className="col-md-10">
                 <input type="email" className="form-control" name="email" placeholder="Email" value={email} onChange={handleChange} required/>
@@ -83,18 +82,18 @@ const Login = () => {
             <div className="col-12">
                 <br/>
                 <button className="btn btn-primary" type="submit" disabled={loading}>
-                    {loading ? "Creating ..." : "Sign In"}
+                    {loading ? "Loading ..." : "Sign In"}
                 </button>
             </div>
             <div className="col-20">
                 <br/>
-                <button className="btn-google" type="submit" onClick={signInWithGoogle}>
+                <button className="btn btn-primary active" type="submit" onClick={signInWithGoogle}>
                     Sign In with Google
                 </button>
             </div>
             <div className="col-20">
                 <br/>
-                <button className="btn-github" type="submit" onClick={signInWithGithub}>
+                <button className="btn btn-success active" type="submit" onClick={signInWithGithub}>
                     Sign In with Github
                 </button>
             </div>

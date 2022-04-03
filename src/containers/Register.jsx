@@ -49,7 +49,7 @@ const Register = () => {
     return (
         <section>
         <form className="form-login" onSubmit={handleSubmit} >
-            <h2>Sign Up to Chatty</h2>
+            <h2>Sign Up</h2>
             <br/>
             <div className="col-md-10">
                 <input type="text" className="form-control" name="name" placeholder="Name" value={name} onChange={handleChange} minLength="4" required/>

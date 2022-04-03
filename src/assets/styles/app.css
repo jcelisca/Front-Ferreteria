@@ -4,8 +4,8 @@
 
 :root{
     --color-1: #242526;
-    --color-2: #e2ebf5;
-    --color-3: #8416df;
+    --color-2: #f0eee8;
+    --color-3: #08a2e9;
     --color-4: #7997b4;
     --color-5: #5f3429;
     --color-6: #1d422c;
@@ -15,7 +15,7 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 60px;
     padding: 0px 20px;
     background-color: var(--color-3);
     border-bottom: 1px solid var(--color-6);
@@ -46,4 +46,14 @@ section h2{
 }
 .col-12{
     text-align: center;
+}
+
+.col-20{
+    text-align: center;
+}
+
+.container{
+    text-align: center;
+    padding: 50px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
