@@ -1,8 +1,10 @@
 
+import Register from "./containers/Register";
+
 function App() {
   return (
     <div className="div-welcome">
-      <h1>Reto final - Client Side</h1>
+      <Register/>
     </div>
   );
 }
