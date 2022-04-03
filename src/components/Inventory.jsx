@@ -1,7 +1,12 @@
+import Table from "./Table";
+
 const Inventory = () => {
     return (
-        <h1>Inventory</h1>
-     );
+        <div>
+            <h1>Inventory</h1>
+            <Table />
+        </div>
+    );
 }
 
 export default Inventory;
