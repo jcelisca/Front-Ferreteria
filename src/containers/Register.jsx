@@ -1,83 +1,85 @@
 import { useState } from "react";
-import firebaseApp from "../firebase/credentials"
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-} from "firebase/auth";
-import { getFirestore, doc, collection, setDoc } from "firebase/firestore";
-
-const auth = getAuth(firebaseApp);
+import { setDoc, doc, Timestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase/credentials";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 const Register = () => {
-    const firestore = getFirestore(firebaseApp);
-    const [isRegistrando, setIsRegistrando] = useState(false);
 
-    async function registrarUsuario(email, password) {
-        const infoUsuario = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        ).then((usuarioFirebase) => {
-            return usuarioFirebase;
-        });
+    const [data, setData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        loading: false
+    });
 
-        console.log(infoUsuario.user.uid);
-        const docuRef = doc(firestore, `usuarios/${infoUsuario.user.uid}`);
-        setDoc(docuRef, { correo: email });
-    }
+    const history = useNavigate();
+    const {name, email, password, loading } = data;
 
-    function submitHandler(e) {
+    const handleChange = (e)=>{
+        setData({...data, [e.target.name]: e.target.value});
+    };
+
+    const handleSubmit = async e =>{
         e.preventDefault();
-
-        const email = e.target.elements.email.value;
-        const password = e.target.elements.password.value;
-
-        console.log("submit", email, password);
-
-        if (isRegistrando) {
-            // registrar
-            registrarUsuario(email, password);
-        } else {
-            // login
-            signInWithEmailAndPassword(auth, email, password);
+        setData({ ...data, loading: true });
+        try{
+            const result = await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db, 'users', result.user.uid),{
+                uid: result.user.uid,
+                name,
+                email,
+                createdAt: Timestamp.fromDate(new Date()),
+                isOnline: true,
+            });
+            setData({
+                name: "",
+                email: "",
+                password: "",
+                loading: false,
+            });
+            history("/");
+        }catch(err){
+            setData({ ...data, loading: false });
+            console.log(err.message);
         }
     }
 
     return (
-        <div className="abs-center">
-            <h1>Wellcome</h1>
-            <h2>{isRegistrando ? <p>Fill in the form below to create an account.</p> : "Inicia sesión"}</h2>
-            <form className="form-login" onSubmit={submitHandler} >
-                <div className="col-md-12">
-                    <input type="email" className="form-control" id="email" placeholder="Email" required />
+        <section>
+        <form className="form-login" onSubmit={handleSubmit} >
+            <h2>Sign Up to Chatty</h2>
+            <br/>
+            <div className="col-md-10">
+                <input type="text" className="form-control" name="name" placeholder="Name" value={name} onChange={handleChange} minLength="4" required/>
+                    <div className="invalid-feedback">
+                        Please provide a valid name.
+                    </div>
+            </div>
+            <br/>
+            <div className="col-md-10">
+                <input type="email" className="form-control" name="email" placeholder="Email" value={email} onChange={handleChange} required/>
                     <div className="invalid-feedback">
                         Please provide a valid email.
                     </div>
-                </div>
-                <div className="col-md-12">
-                    <br />
-                    <input type="password" className="form-control" id="password" placeholder="Password" required />
+            </div>
+            <div className="col-md-10">
+                <br/>
+                <input type="password" className="form-control" name="password" placeholder="Password" value={password} onChange={handleChange} minLength="6" required/>
                     <div className="invalid-feedback">
                         Please provide a valid password.
                     </div>
-                </div>
-                <div className="col-12">
-                    <br />
-                    <button className="btn btn-primary" type="submit"
-                        onClick={() => setIsRegistrando(!isRegistrando)}>
-                        {isRegistrando ? "Registrar" : "Iniciar sesión"}
-                    </button>
-                </div>
-                <hr></hr>
-                <button type="submit" onClick={() => setIsRegistrando(!isRegistrando)}>
-                    {isRegistrando ? "Ya tienes cuenta? ¡inicia sesion!" : "Registrarse"}
+            </div>
+            <div className="col-12">
+                <br/>
+                <button className="btn btn-primary" type="submit" disabled={loading}>
+                    {loading ? "Creating ..." : "Sign Up"}
                 </button>
-                <p>Already have an account? Login </p>
-            </form>
-        </div>
-    );
+            </div>
+        </form>
+        </section>
+     );
 }
 
 export default Register;
