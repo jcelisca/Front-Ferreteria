@@ -42,7 +42,6 @@ const Table = () => {
                         {headerGroup.headers.map(column => (
                             <th {...column.getHeaderProps()}>{column.render('Header')}</th>
                         ))}
-                        <th></th>
                     </tr>
                 ))}
             </thead>
@@ -53,11 +52,10 @@ const Table = () => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {
-                                    row.cells.map((cell)=>{
+                                    row.cells.map((cell) => {
                                         return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                     })
                                 }
-                                <td></td>
                             </tr>
                         )
                     })
