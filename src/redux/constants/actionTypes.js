@@ -1,0 +1,5 @@
+export const actionTypes = {
+    GET_CLIENTES : 'GET_CLIENTES',
+    GET_PROVEEDOR : 'GET_PROVEEDOR',
+    GET_INVENTARIO : 'GET_INVENTARIO'
+}

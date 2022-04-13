@@ -1,25 +1,10 @@
-import { useMemo, useState, useEffect } from "react";
-import { COLUMNS } from "../columns";
+import { useMemo } from "react";
 import { useTable } from "react-table";
 
-const Table = () => {
-
-    const [inventario, setInventario] = useState([]);
-    const initialUrl = "http://localhost:8080/inventario";
-
-    const fetchInventario = (url) => {
-        fetch(url)
-            .then(response => response.json())
-            .then(data => setInventario(data))
-            .then(error => console.log(error))
-    };
-
-    useEffect(() => {
-        fetchInventario(initialUrl);
-    }, []);
+const Table = ({COLUMNS, info}) => {
 
     const columns = useMemo(() => COLUMNS, []);
-    const data = useMemo(() => inventario, []);
+    const data = useMemo(() => info, []);
 
     const tableInstance = useTable({
         columns,

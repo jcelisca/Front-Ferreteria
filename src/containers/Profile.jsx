@@ -15,7 +15,7 @@ const Profile = () => {
 
     return user ? (
         <section>
-            <h1>Wellcome</h1>
+            <h1>Welcome</h1>
             <div className="text_container">
                 <h3>{user.name}</h3>
                 <p>{user.email}</p>
